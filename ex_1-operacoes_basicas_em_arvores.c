@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 struct arvore
 {
@@ -24,17 +25,18 @@ void insert(struct arvore *no, int c)
 				aux = aux->dir;
 			}
 		}
-		novo = (struct *)malloc(sizeof(struct arvore));
+		novo = (struct arvore *)malloc(sizeof(struct arvore));
 		novo->chave = c;
 		novo->esq = NULL;
 		novo->dir = NULL;
 		
-		if (pai == NULL)
+	/*	if (pai == NULL)
 		{
 			no = novo; //aqui vai alterar o endereco da raiz ne? ai altera a raiz que eu declarei na main?
 			return; //precisa? pra nao entrar nos outros casos aqui embaixo
-		}
-		else if (pai->chave >= novo->chave)
+		} */
+		//else 
+		if (pai->chave >= novo->chave)
 		{
 			pai->esq = novo;
 		}
@@ -45,7 +47,7 @@ void insert(struct arvore *no, int c)
 		
 }
 
-int remove (struct arvore *no, int k)
+int removenum(struct arvore *no, int k)
 {
 	struct arvore *aux = no;
 	struct arvore *pai = NULL;
@@ -126,22 +128,67 @@ posordem(struct arvore*no)
 
 void bracketing(struct arvore *no)
 {
-	
+	if(no!=NULL)
+	{
+		printf("[%d", no->chave);
+		bracketing(no->esq);
+		printf("]");
+		bracketing(no->dir);
+		printf("]");
+	}
+	else 
+	printf("[");
 }
 
 
 int main()
 {
-	int n, c, i=1;
-	struct arvore *raiz = NULL;
-	printf("Quantos números serão inseridos?\n");
+	int n, c, k, i=2;
+	char r;
+	//struct arvore *raiz = NULL;
+	struct arvore * raiz = (struct arvore*) malloc(sizeof(struct arvore));
+    raiz->esq = NULL;
+    raiz->dir = NULL;
+	printf("Quantos numeros serao inseridos?\n");
 	scanf("%d", &n);
+	printf("Digite o numero na posicao 1: ");
+		scanf("%d", &raiz->chave);
 	while (i <= n)
 	{
-		printf("\nDigite o numero na posicao i: ");
+		printf("Digite o numero na posicao %d: ", i);
 		scanf("%d", &c);
 		insert(raiz, c);
 		i++;
+	}
+	printf("\n\nImpressao Em ordem:");
+		emordem(raiz);
+	printf("\n\nImpressao Pre ordem:");
+		preordem(raiz);
+	printf("\n\nImpressao Pos ordem:");
+		posordem(raiz);
+	printf("\n\nImpressao em labelled brackeing:");
+		bracketing(raiz);
+	printf("\nVoce deseja remover algum destes numeros? \n(Digite s para sim, ou n para nao)");
+	r = getch();
+	if (r==115) //ta certo??
+	{
+		while (r == 115)
+		{
+			printf("\nQual numero voce deseja remover?");
+			scanf("%d", &k);
+				removenum(raiz, k);
+			printf("\nSua nova arvore esta abaixo:\n");
+			printf("\n\nImpressao Em ordem:");
+				emordem(raiz);
+			printf("\n\nImpressao Pre ordem:");
+				preordem(raiz);
+			printf("\n\nImpressao Pos ordem:");
+				posordem(raiz);
+			printf("\n\nImpressao em labelled brackeing:");
+				bracketing(raiz);
+			printf("\nDeseja remover mais algum numero? \n(Digite s para sim, ou n para nao)");
+			r = getch();
+		}
 	}
 
 }
