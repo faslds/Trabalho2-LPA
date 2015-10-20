@@ -61,20 +61,74 @@ int remove (struct arvore *no, int k)
 		else 
 		{
 			aux = aux->dir;
-		}
-	return -1;
+		}	
 	}
+	if (aux == NULL)
+	return-1;
 	
 	a = aux->dir;
 	while (a != NULL && a->esq != NULL)
 	{
-		a = a->esq
+		a = a->esq;
 	}
 	
 	if (a != NULL)
+	{
+		a->esq = aux->esq;
+		b = aux->dir;
+	}
+	else 
+	{
+		b = aux->esq;
+	}
+	if (pai->chave >= k)
+	{
+		pai->esq = b;
+	}
+	else
+	{
+		pai->dir = b;
+	}
+	free(aux);
 	
 	
 }
+
+void emordem(struct arvore*no) //vai passar por todas as chaves, em ordem crescente.
+{
+	if(no!=NULL)
+	{
+		emordem(no->esq);
+		printf("\n%d", no->chave);
+		emordem(no->dir);
+	}
+}
+
+void preordem(struct arvore *no)
+{
+	if(no!=NULL)
+	{
+		printf("\n%d", no->chave);
+		preordem(no->esq);
+		preordem(no->dir);
+	}
+}
+
+posordem(struct arvore*no)
+{
+	if(no!=NULL)
+	{
+		posordem(no->esq);
+		posordem(no->dir);
+		printf("\n%d", no->chave);
+	}
+}
+
+void bracketing(struct arvore *no)
+{
+	
+}
+
 
 int main()
 {
@@ -89,7 +143,7 @@ int main()
 		insert(raiz, c);
 		i++;
 	}
-	
+
 }
 
 
