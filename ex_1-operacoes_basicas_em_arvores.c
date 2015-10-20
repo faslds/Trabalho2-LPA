@@ -3,12 +3,66 @@
 struct arvore
 {
 	int chave; //chave serve para o reconhecimento do item
-	int dado; 
 	struct arvore *esq; //cada strcut aponta para outras duas, uma a esquerda e outra a direita
 	struct arvore *dir;
 };
 
-void createroot() //cria a raiz da arvore
+void insert(struct arvore *no, int c)
+{
+	struct arvore *aux = no;
+	struct arvore *pai = NULL;
+	struct arvore *novo = NULL;	
+		while (aux != NULL)
+		{
+			pai = aux;
+			if (aux->chave >= c)
+			{
+				aux = aux->esq;
+			}
+			else 
+			{
+				aux = aux->dir;
+			}
+		}
+		novo = (struct *)malloc(sizeof(struct arvore));
+		novo->chave = c;
+		novo->esq = NULL;
+		novo->dir = NULL;
+		
+		if (pai == NULL)
+		{
+			no = novo; //aqui vai alterar o endereco da raiz ne? ai altera a raiz que eu declarei na main?
+			return; //precisa? pra nao entrar nos outros casos aqui embaixo
+		}
+		else if (pai->chave >= novo->chave)
+		{
+			pai->esq = novo;
+		}
+		else
+		{ 
+			pai->dir = novo;
+		}
+		
+}
+
+int main()
+{
+	int i;
+	struct arvore *raiz = NULL;
+	
+	
+}
+
+
+
+
+
+
+
+
+
+
+/*void createroot() //cria a raiz da arvore
 {
 	printf("Agora sera criada a raiz de sua arvore./nDigite o numero que ficara na raiz")
 }
@@ -24,14 +78,14 @@ void insert(int n, struct arvore *a)
 		scanf("%d", &d);
 		if(i==0)
 		{
-			raiz->dado = d;
-			raiz->chave = i;
+			//raiz->dado = d;
+			raiz->chave = d;
 			raiz->esq = NULL;
 			raiz->dir = NULL;
 		}
 		else if (i != 0)
 		{
-		/*	if(d < raiz->dado && raiz esq == NULL)
+			if(d < raiz->dado && raiz esq == NULL)
 			{
 				p = (struct *)malloc(sizeof(struct arvore));
 				p->dado = d;
@@ -40,20 +94,20 @@ void insert(int n, struct arvore *a)
 				p->dir = NULL;
 				raiz->esq = p;
 			}
-		*/
+		
 			//else if (d < raiz->dado && raiz != NULL)
-			if (d < raiz->dado)
+			if (d < raiz->chave)
 			{
 				if (raiz->esq == NULL)
 				{
 					p = (struct *)malloc(sizeof(struct arvore));
-					p->dado = d;
-					p->chave = i;
+					//p->dado = d;
+					p->chave = d;
 					p->esq = NULL;
 					p->dir = NULL;
 					raiz->esq = p;
 				}
-				else if (raiz->esq != NULL)
+				else if (raiz->esq != NULL && d <  )
 				{
 					p = raiz->esq;
 					while (p->esq != NULL)
@@ -70,6 +124,9 @@ void insert(int n, struct arvore *a)
 				}
 			}
 			else if (d >= raiz->dado)
+			{
+				
+			}
 			
 		}
 		
@@ -96,3 +153,4 @@ int main()
 	}
 	raiz=(struct *)malloc(sizeof(struct arvore)); //aloca dinamicamente somente a memoria necessaria
 }
+*/
