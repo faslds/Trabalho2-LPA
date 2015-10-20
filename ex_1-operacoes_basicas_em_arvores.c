@@ -45,11 +45,50 @@ void insert(struct arvore *no, int c)
 		
 }
 
+int remove (struct arvore *no, int k)
+{
+	struct arvore *aux = no;
+	struct arvore *pai = NULL;
+	struct arvore *a = NULL;
+	struct arvore *b = NULL;
+	while (aux != NULL && aux->chave != k)
+	{
+		pai = aux;
+		if (aux->chave >= k)
+		{
+			aux = aux->esq;
+		}
+		else 
+		{
+			aux = aux->dir;
+		}
+	return -1;
+	}
+	
+	a = aux->dir;
+	while (a != NULL && a->esq != NULL)
+	{
+		a = a->esq
+	}
+	
+	if (a != NULL)
+	
+	
+}
+
 int main()
 {
-	int i;
+	int n, c, i=1;
 	struct arvore *raiz = NULL;
-	
+	printf("Quantos números serão inseridos?\n");
+	scanf("%d", &n);
+	while (i <= n)
+	{
+		printf("\nDigite o numero na posicao i: ");
+		scanf("%d", &c);
+		insert(raiz, c);
+		i++;
+	}
 	
 }
 
