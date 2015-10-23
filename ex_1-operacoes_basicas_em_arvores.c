@@ -8,7 +8,7 @@ struct arvore
 	struct arvore *dir;
 };
 
-void insert(struct arvore *no, int c)
+void insert(struct arvore *no, int c) //funcao para inserir numeros
 {
 	struct arvore *aux = no;
 	struct arvore *pai = NULL;
@@ -27,7 +27,7 @@ void insert(struct arvore *no, int c)
 */		while (aux != NULL)
 			{
 				pai = aux;
-				if (aux->chave >= c)
+				if (aux->chave >= c) // aqui ele checa por onde percorrer, mantendo a arvore ordenada
 				{
 					aux = aux->esq;
 				}
@@ -36,7 +36,7 @@ void insert(struct arvore *no, int c)
 					aux = aux->dir;
 				}
 			}
-			novo = (struct arvore *)malloc(sizeof(struct arvore));
+			novo = (struct arvore *)malloc(sizeof(struct arvore)); // memoria eh locada para o novo no
 			novo->chave = c;
 			novo->esq = NULL;
 			novo->dir = NULL;
@@ -47,7 +47,7 @@ void insert(struct arvore *no, int c)
 				return; //precisa? pra nao entrar nos outros casos aqui embaixo
 			} */
 			//else 
-			if (pai->chave >= novo->chave)
+			if (pai->chave >= novo->chave) //aqui checa onde colocar o novo no para manter a ordenacao
 			{
 				pai->esq = novo;
 			}
@@ -58,13 +58,13 @@ void insert(struct arvore *no, int c)
 	}
 //}
 
-int removenum(struct arvore *no, int k)
+int removenum(struct arvore *no, int k) //funcao para remover numeros
 {
 	struct arvore *aux = no;
 	struct arvore *pai = NULL;
 	struct arvore *a = NULL;
 	struct arvore *b = NULL;
-	while (aux != NULL && aux->chave != k)
+	while (aux != NULL && aux->chave != k) //aqui localiza o item a ser removida=o
 	{
 		pai = aux;
 		if (aux->chave >= k)
@@ -77,19 +77,19 @@ int removenum(struct arvore *no, int k)
 		}	
 	}
 	
-	if (aux == NULL)
+	if (aux == NULL) //caso o item a ser removido nao exista, imprime uma mensagem de erro
 	{
-		printf("\nFavor entrar com um numero que esteja na sua arvore.");
-		return;
+		printf("\nFavor entrar com um numero que esteja na sua arvore."); 
+		return; //sai da funcao
 	}	
 	
 	a = aux->dir;
-	while (a != NULL && a->esq != NULL)
+	while (a != NULL && a->esq != NULL) //aqui seleciona parte para remontar a arvore e manter a ordenacao
 	{
-		a = a->esq;
+		a = a->esq; //procura todos a esquerda, pois serao menores que o item a ser removido
 	}
 	
-	if (a != NULL)
+	if (a != NULL) //dois casos para fazera remocao, dependendo se a chegou a NULL ou nao.
 	{
 		a->esq = aux->esq;
 		b = aux->dir;
@@ -98,7 +98,7 @@ int removenum(struct arvore *no, int k)
 	{
 		b = aux->esq;
 	}
-	if (pai->chave >= k)
+	if (pai->chave >= k) //escolhe onde remontar a arvore e manter a ordenacao.
 	{
 		pai->esq = b;
 	}
@@ -106,31 +106,37 @@ int removenum(struct arvore *no, int k)
 	{
 		pai->dir = b;
 	}
-	free(aux);
+	free(aux);//libera a memoria
 }
 
+//foi feita uma funcao para remover a raiz, devido a particularidade dessa situacao
+/* a ideia eh fazer com que o numero a direita da raiz a ser removida seja a nova raiz, 
+entao percorre e acha-se o menor numero do lado direito da arvore para a sua esquerda
+toda a parte esquerda da arvore, pois ha a garantia de que toda essa parte sera menor 
+que o numero selecionado (o numero selecionado eh "o menor dos maiores que a raiz". */
 struct arvore *removeroot(struct arvore *no, int k, int *newroot)
 {
 	struct arvore *aux = no;
 	struct arvore *pai = NULL;
-	struct arvore *a = NULL;
+	struct arvore *a = NULL; /*os ponteiros a, b, c servem para armazenar os enderecos, que serao necessarios
+para a remontagem da arvore, portanto eles ficam fixos durante a execucao da funcao*/
 	struct arvore *b = NULL;
 	struct arvore *c = NULL;
 	pai = aux->dir;
 	a = aux->esq;
 	b = no;
 	c = aux->dir;
-	while (aux->esq != NULL)
+	while (aux->esq != NULL) //encontra o "menor dos maiores que a raiz"
 	{
 		aux = pai->esq;
 		pai = aux;
 	}
 	//printf("%d", aux->chave);
-	aux->esq = a;
+	aux->esq = a; //coloca a parte da esquerda da raiz a esquerda do "menor dos maiores"
 	//no = c;
-	*newroot = c->chave;
-	free(b);
-	return c;
+	*newroot = c->chave; //"rastreia" qual eh a nova raiz, para uma possivel nova remocao no futuro
+	free(b); //libera a memoria
+	return c; //retorna o endereco da nova raiz, para ser passado ao ponteiro raiz na funcao main
 }
 
 void emordem(struct arvore*no) //vai passar por todas as chaves, em ordem crescente.
