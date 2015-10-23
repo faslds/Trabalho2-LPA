@@ -107,8 +107,30 @@ int removenum(struct arvore *no, int k)
 		pai->dir = b;
 	}
 	free(aux);
-	
-	
+}
+
+struct arvore *removeroot(struct arvore *no, int k, int *newroot)
+{
+	struct arvore *aux = no;
+	struct arvore *pai = NULL;
+	struct arvore *a = NULL;
+	struct arvore *b = NULL;
+	struct arvore *c = NULL;
+	pai = aux->dir;
+	a = aux->esq;
+	b = no;
+	c = aux->dir;
+	while (aux->esq != NULL)
+	{
+		aux = pai->esq;
+		pai = aux;
+	}
+	//printf("%d", aux->chave);
+	aux->esq = a;
+	//no = c;
+	*newroot = c->chave;
+	free(b);
+	return c;
 }
 
 void emordem(struct arvore*no) //vai passar por todas as chaves, em ordem crescente.
@@ -158,7 +180,7 @@ void bracketing(struct arvore *no)
 
 int main()
 {
-	int n, c, k, p, a, i=2;
+	int n, c, k, escolha, a, root, i=2;
 	char r;
 //	struct arvore *raiz = NULL;
 	struct arvore * raiz = (struct arvore*) malloc(sizeof(struct arvore));
@@ -169,6 +191,7 @@ int main()
 	scanf("%d", &n);
 	printf("Digite o numero na posicao 1:(sera a sua raiz) ");
 		scanf("%d", &raiz->chave);
+	root = raiz->chave;
 	while (i <= n)
 	{
 		printf("Digite o numero na posicao %d: ", i);
@@ -177,47 +200,59 @@ int main()
 		i++;
 	}
 	
-	while (p != 7)
+	while (escolha != 7)
 	{
 		printf("\n\nO que voce deseja fazer? Digite o numero correspondente!\n");
-		printf("1 - Impressao Em Ordem\n2 - impressao Pre Ordem\n3 - Impressao Pos Ordem\n");
+		printf("1 - Impressao Em Ordem\n2 - Impressao Pre Ordem\n3 - Impressao Pos Ordem\n");
 		printf("4 - Impressao em Labelled Bracketing\n5 - Inserir mais numeros\n6 - Remover numeros\n7 - Sair\n\n");
-		scanf("%d", &p);
-		if (p == 1)
-		{
-			printf("\nImpressao Em ordem:");
-				emordem(raiz);
-		}
-		else if (p == 2)
-		{
-			printf("\nImpressao Pre ordem:");
-				preordem(raiz);
-		}
-		else if (p == 3)
-		{
-			printf("\nImpressao Pos ordem:");
-				posordem(raiz);
-		}
-		else if (p == 4)
-		{
-			printf("\nImpressao em labelled bracketing:");
-				bracketing(raiz);
-		}
-		else if (p == 5)
-		{
-			printf("Qual numero voce quer inserir?");
-			scanf("%d", &a);
-			insert(raiz, a);
-		}
-		else if (p == 6)
-		{
-			printf("\nQual numero voce deseja remover?");
-			scanf("%d", &k);
-				removenum(raiz, k);
-		}
-		else if (p > 7)
+		scanf("%d", &escolha);
+		if (escolha > 7)
 		{
 			printf("Favor entrar com uma das opcoes do menu.\n");
+		}
+		else
+		{
+			switch(escolha)
+			{
+			case 1:
+				printf("\nImpressao Em ordem:");
+				emordem(raiz);
+				break;
+			
+			case 2:
+				printf("\nImpressao Pre ordem:");
+				preordem(raiz);
+				break;
+			
+			case 3:
+				printf("\nImpressao Pos ordem:");
+				posordem(raiz);
+				break;
+			
+			case 4:
+				printf("\nImpressao em labelled bracketing:");
+				bracketing(raiz);
+				break;
+			
+			case 5:
+				printf("Qual numero voce quer inserir?");
+				scanf("%d", &a);
+				insert(raiz, a);
+				break;
+			
+			case 6:
+				printf("\nQual numero voce deseja remover?");
+				scanf("%d", &k);
+				if (k != root)
+				{
+					removenum(raiz, k);
+				}
+				else
+				{
+					raiz = removeroot(raiz, k, &root);
+				}
+				break;
+			}
 		}
 	}
 }
