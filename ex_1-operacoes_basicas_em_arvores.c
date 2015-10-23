@@ -139,7 +139,7 @@ para a remontagem da arvore, portanto eles ficam fixos durante a execucao da fun
 	return c; //retorna o endereco da nova raiz, para ser passado ao ponteiro raiz na funcao main
 }
 
-void emordem(struct arvore*no) //vai passar por todas as chaves, em ordem crescente.
+void emordem(struct arvore*no) //vai passar por todas as chaves, em ordem crescente, e imprimir elas.
 {
 	if(no!=NULL)
 	{
@@ -149,7 +149,7 @@ void emordem(struct arvore*no) //vai passar por todas as chaves, em ordem cresce
 	}
 }
 
-void preordem(struct arvore *no)
+void preordem(struct arvore *no) //imprime em "niveis" 
 {
 	if(no!=NULL)
 	{
@@ -159,7 +159,7 @@ void preordem(struct arvore *no)
 	}
 }
 
-posordem(struct arvore*no)
+posordem(struct arvore*no) 
 {
 	if(no!=NULL)
 	{
@@ -169,7 +169,7 @@ posordem(struct arvore*no)
 	}
 }
 
-void bracketing(struct arvore *no)
+void bracketing(struct arvore *no)//a ordem de impressao eh semelhante a do pre ordem, porem contem os []´s necessarios.
 {
 	if(no!=NULL)
 	{
@@ -189,16 +189,16 @@ int main()
 	int n, c, k, escolha, a, root, i=2;
 	char r;
 //	struct arvore *raiz = NULL;
-	struct arvore * raiz = (struct arvore*) malloc(sizeof(struct arvore));
+	struct arvore * raiz = (struct arvore*) malloc(sizeof(struct arvore)); // a raiz eh alocada e feita na funcao main
     raiz->esq = NULL;
     raiz->dir = NULL;
     printf("Ola, para comecar o programa, primeiro eh preciso criar sua arvore.\n");
 	printf("Quantos numeros voce quer inserir?\n");
 	scanf("%d", &n);
 	printf("Digite o numero na posicao 1:(sera a sua raiz) ");
-		scanf("%d", &raiz->chave);
-	root = raiz->chave;
-	while (i <= n)
+		scanf("%d", &raiz->chave); //adiciona a chave na raiz
+	root = raiz->chave; //"marca" a raiz, para saber quando eh necessario remover a raiz ou um outro numero qualquer
+	while (i <= n)//preenche a arvore
 	{
 		printf("Digite o numero na posicao %d: ", i);
 		scanf("%d", &c);
@@ -206,13 +206,13 @@ int main()
 		i++;
 	}
 	
-	while (escolha != 7)
+	while (escolha != 7) //repete o menu ate que seja escolhida a opcao "sair"
 	{
 		printf("\n\nO que voce deseja fazer? Digite o numero correspondente!\n");
 		printf("1 - Impressao Em Ordem\n2 - Impressao Pre Ordem\n3 - Impressao Pos Ordem\n");
 		printf("4 - Impressao em Labelled Bracketing\n5 - Inserir mais numeros\n6 - Remover numeros\n7 - Sair\n\n");
 		scanf("%d", &escolha);
-		if (escolha > 7)
+		if (escolha > 7) //caso seja escolhida uma opcao fora do menu, uma mensagem de erro eh impressa
 		{
 			printf("Favor entrar com uma das opcoes do menu.\n");
 		}
@@ -249,7 +249,7 @@ int main()
 			case 6:
 				printf("\nQual numero voce deseja remover?");
 				scanf("%d", &k);
-				if (k != root)
+				if (k != root)//escolhe se vai chamar a funcao pra remover a raiz ou um outro numero qualquer
 				{
 					removenum(raiz, k);
 				}
