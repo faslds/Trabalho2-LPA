@@ -95,7 +95,7 @@ int removenum(struct arvore *no, int k) //funcao para remover numeros
 /* a ideia eh fazer com que o numero a direita da raiz a ser removida seja a nova raiz, 
 entao percorre e acha-se o menor numero do lado direito da arvore para a sua esquerda
 toda a parte esquerda da arvore, pois ha a garantia de que toda essa parte sera menor 
-que o numero selecionado (o numero selecionado eh "o menor dos maiores que a raiz". */
+que o numero selecionado (o numero selecionado eh "o menor dos maiores que a raiz"). */
 struct arvore *removeroot(struct arvore *no, int k)
 {
 	struct arvore *aux = no;
@@ -104,19 +104,19 @@ struct arvore *removeroot(struct arvore *no, int k)
 para a remontagem da arvore, portanto eles ficam fixos durante a execucao da funcao*/
 	struct arvore *b = NULL;
 	struct arvore *c = NULL;
-	if (aux->dir == NULL)
+	if (aux->dir == NULL)//se a raiz so tem coisas a esquerda, basta apenas remover a raiz
 	{
 		return aux->esq;
 		free(aux);
 	}
-	else if (aux->esq == NULL)
+	else if (aux->esq == NULL)//se a raiz so tem coisas a direita, basta apenas remover a raiz
 	{
 		return aux->dir;
 		free(aux);
 	}
-	else
+	else //caso existam ramos a esquerda e a direita da raiz
 	{
-		pai = aux->dir;
+		pai = aux->dir; 
 		a = aux->esq;
 		b = no;
 		c = aux->dir;
@@ -134,14 +134,14 @@ para a remontagem da arvore, portanto eles ficam fixos durante a execucao da fun
 int search(struct arvore *no, int k)
 {
 	struct arvore *aux = no;
-	if (aux->chave == k)
+	if (aux->chave == k) //testa se a raiz ja eh o numero procurado
 	{
 		printf("O numero %d existe na ABB!", k);
 		return 0;
 	}
 	while (aux != NULL)
 	{
-		if (aux->chave < k)
+		if (aux->chave < k)//percorre a arvore procurando o numero em seus ramos
 		{
 			aux=aux->dir;
 		}
@@ -151,10 +151,10 @@ int search(struct arvore *no, int k)
 		}
 		else
 		{
-			return 1;
+			return 1; //se achou, vai retornar 1
 		}
 	}
-	return -1;
+	return -1;//retorna -1 se o numero nao for achado
 }
 
 void emordem(struct arvore*no) //vai passar por todas as chaves, em ordem crescente, e imprimir elas.
