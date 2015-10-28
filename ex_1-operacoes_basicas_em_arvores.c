@@ -167,7 +167,7 @@ void emordem(struct arvore*no) //vai passar por todas as chaves, em ordem cresce
 	}
 }
 
-void preordem(struct arvore *no) //imprime em "niveis" 
+void preordem(struct arvore *no)
 {
 	if(no!=NULL)
 	{
