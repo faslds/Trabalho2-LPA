@@ -212,6 +212,11 @@ int main()
     printf("Ola, para comecar o programa, primeiro eh preciso criar sua arvore.\n");
 	printf("Quantos numeros voce quer inserir?\n");
 	scanf("%d", &n);
+	while (n<1)
+	{
+		printf("Favor entrar com um numero maior do que 0\n");
+		scanf("%d", &n);
+	}
 	printf("Digite o numero na posicao 1:(sera a sua raiz) ");
 		scanf("%d", &raiz->chave); //adiciona a chave na raiz
 	root = raiz->chave; //"marca" a raiz, para saber quando eh necessario remover a raiz ou um outro numero qualquer
