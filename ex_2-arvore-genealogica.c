@@ -10,18 +10,26 @@ struct arvore
 	struct arvore *pai;
 };
 
-struct arvore *select(struct arvore *no, char filho)
+
+struct arvore *select(struct arvore *no, char *filho)
 {
+	struct arvore *end = (struct arvore *)-1;
 	if (strcmp(filho, no->nome) == 0)
 	{
-		return no;
+		end = no;
+		printf("\nachou %s", no->nome);
 	}
-	if(no!=NULL)
+	printf("\n%s", no->nome);
+	if (end == -1)
 	{
-		printf("\n%d", no->nome);
-		preordem(no->mae);
-		preordem(no->pai);
+		end = select(no->mae, filho);
+		if (end == -1)
+		{
+			end = (select(no->pai, filho));
+		}
 	}
+	
+	return (end);
 }
 
 void antepassados(struct arvore *pessoa, int k)
@@ -29,9 +37,9 @@ void antepassados(struct arvore *pessoa, int k)
 	//struct arvore *aux = pessoa; 
 	if(pessoa!=NULL)
 	{
-		antepassados(pessoa->mae);
-		antepassados(pessoa->pai);
-		if(arvore->grau != k)
+		antepassados(pessoa->mae, k);
+		antepassados(pessoa->pai, k);
+		if(pessoa->grau != k)
 		{
 		printf("\n%s", pessoa->nome);
 		}
@@ -52,33 +60,54 @@ void bracketing(struct arvore *pessoa)//a ordem de impressao eh semelhante a do 
 	printf("[");
 }
 
-void insert(struct arvore *no, char filho, char mae, char pai) //funcao para inserir pessoas na árvore
+void insert(struct arvore *no, char *filho, char *mae, char *pai) //funcao para inserir pessoas na árvore
 {
 	struct arvore *aux = no;
 	struct arvore *pont = NULL;
 	
 	pont = select(aux, filho);
-	
+	printf("pos select: %s", pont->nome);
 	pont->mae = (struct arvore *)malloc(sizeof(struct arvore)); // memoria eh alocada para o novo no
 	pont->pai = (struct arvore *)malloc(sizeof(struct arvore)); // memoria eh alocada para o pai tambem
 
-	pont->mae->nome = mae;
+	strcpy(pont->mae->nome, mae);
 	pont->mae->mae = NULL;
 	pont->mae->pai = NULL;
+	pont->mae->grau = pont->grau+1;
 	
-	pont->pai->nome = pai;
+	strcpy(pont->pai->nome, pai);
 	pont->pai->mae = NULL;
 	pont->pai->pai = NULL;
-	
+	pont->pai->grau = pont->grau+1;
 }
 
 int main()
 {
-	int n;
+	struct arvore *raiz = NULL;
+	int n, i=2;
 	char filho[40], pai[40], mae[40];
 	printf("Ola, este programa ira montar uma arvore genealogica.\n");
-	printf("Para inserir as pessoas, digite seus nomes, de 3 em 3, separados por espaço, na seguinte ordem: filho mae pai");
+	printf("Para inserir as pessoas, digite seus nomes, de 3 em 3, separados por espaço, na seguinte ordem: 'filho mae pai'");
 	printf("\nQuantas dessas tuplas (grupos de 3 nomes) voce quer entrar?");
 	scanf("%d", &n);
-	
+	printf("Digite a tupla 1 (a arvore toda sera feita a partir deste filho):\n");
+	scanf("%s", filho);
+	scanf("%s", mae);
+	scanf("%s", pai);
+	raiz = (struct arvore *)malloc(sizeof(struct arvore));
+	raiz->grau = 0;
+	strcpy(raiz->nome, filho);
+	raiz->mae = NULL;
+	raiz->pai = NULL;
+	//printf("%s %s %s\n", filho, mae, pai);
+	insert(raiz, filho, mae, pai);
+	while (i <= n)
+	{
+		printf("Digite a tupla %d:\n", i);
+		scanf("%s", filho);
+		scanf("%s", mae);
+		scanf("%s", pai);
+		insert(raiz, filho, mae, pai);
+		i++;
+	}
 }
