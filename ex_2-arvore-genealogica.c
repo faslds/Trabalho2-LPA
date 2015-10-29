@@ -34,17 +34,17 @@ struct arvore *select(struct arvore *no, char *filho)
 	return (end);
 }
 
-void antepassados(struct arvore *pessoa, int k)
+void antepassados(struct arvore *pessoa, char *filho)//, int k)
 {
 	//struct arvore *aux = pessoa; 
-	if(pessoa!=NULL)
+	if(pessoa!=NULL && strcmp(pessoa->nome, filho) != 0)
 	{
-		antepassados(pessoa->mae, k);
-		antepassados(pessoa->pai, k);
-		if(pessoa->grau != k)
-		{
 		printf("\n%s", pessoa->nome);
-		}
+		antepassados(pessoa->mae, filho);
+		antepassados(pessoa->pai, filho);
+		//if(pessoa->grau != k)
+		//{
+		//}
 	}
 }
 
@@ -52,7 +52,7 @@ void bracketing(struct arvore *pessoa)//a ordem de impressao eh semelhante a do 
 {
 	if(pessoa!=NULL)
 	{
-		printf("[%d", pessoa->nome);
+		printf("[%s", pessoa->nome);
 		bracketing(pessoa->mae);
 		printf("]");
 		bracketing(pessoa->pai);
@@ -87,7 +87,7 @@ int main()
 {
 	struct arvore *raiz = NULL;
 	int n, i=2, escolha;
-	char filho[40], pai[40], mae[40];
+	char filho[40], pai[40], mae[40], ind[40];
 	printf("Ola, este programa ira montar uma arvore genealogica.\n");
 	printf("Para inserir as pessoas, digite seus nomes, de 3 em 3, separados por espaco, na seguinte ordem: 'filho mae pai'");
 	printf("\nQuantas dessas tuplas (grupos de 3 nomes) voce quer entrar?");
@@ -112,8 +112,41 @@ int main()
 		insert(raiz, filho, mae, pai);
 		i++;
 	}
-	printf("O que voce deseja fazer? Digite o número correspondente!");
-	printf("1 - Imprimir membros da arvore por geração\n2 - Imprimir os antepassados de um indivíduo\n");
-	printf("3 - Impressao da arvore em 'labelled bracketing'\n4 - Calcular o grau de parentesco entre 2 membros\n5 - Inserir mais individuos\n6 - Sair");
+	while (escolha != 6)
+	{
+	printf("\nO que voce deseja fazer? Digite o numero correspondente!");
+	printf("1 - Imprimir membros da arvore por geração\n2 - Imprimir os antepassados de um individuo\n");
+	printf("3 - Impressao da arvore em 'labelled bracketing'\n4 - Calcular o grau de parentesco entre 2 membros\n5 - Inserir mais individuos\n6 - Sair\n");
 	scanf("%d", &escolha);
+	if (escolha > 6) //caso seja escolhida uma opcao fora do menu, uma mensagem de erro eh impressa
+		{
+			printf("Favor entrar com uma das opcoes do menu.\n");
+		}
+	else 
+	{
+		switch(escolha)
+		{
+			case 1:
+				break;
+			case 2:
+				printf("\nVoce quer os antepassados de qual individuo?\n ");
+				scanf("%s", ind);
+				antepassados(select(raiz, ind), ind);
+				break;
+			case 3:
+				printf("\nImpresao em bracketing:\n");
+				bracketing(raiz);
+				break;
+			case 4:
+				break;
+			case 5:
+				printf("\nDigite a tupla que voce deseja inserir: \n");
+				scanf("%s", filho);
+				scanf("%s", mae);
+				scanf("%s", pai);
+				insert(raiz, filho, mae, pai);
+		}
+	}
+	
+	}
 }
