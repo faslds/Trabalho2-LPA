@@ -13,22 +13,24 @@ struct arvore
 
 struct arvore *select(struct arvore *no, char *filho)
 {
-	struct arvore *end = (struct arvore *)-1;
-	if (strcmp(filho, no->nome) == 0)
+	struct arvore *end = (struct arvore *)-2;
+	if (no != NULL)
 	{
-		end = no;
-		printf("\nachou %s", no->nome);
-	}
-	printf("\n%s", no->nome);
-	if (end == -1)
-	{
-		end = select(no->mae, filho);
-		if (end == -1)
+		if (strcmp(filho, no->nome) == 0)
+		{
+			end = no;
+		//	printf("\nachou %s", no->nome);
+		}
+		//printf("\n%s", no->nome);
+		if (end == -2)
+		{
+			end = select(no->mae, filho);
+		}
+		if (end == -2)
 		{
 			end = (select(no->pai, filho));
 		}
 	}
-	
 	return (end);
 }
 
@@ -66,7 +68,7 @@ void insert(struct arvore *no, char *filho, char *mae, char *pai) //funcao para 
 	struct arvore *pont = NULL;
 	
 	pont = select(aux, filho);
-	printf("pos select: %s", pont->nome);
+	//printf("pos select: %s", pont->nome);
 	pont->mae = (struct arvore *)malloc(sizeof(struct arvore)); // memoria eh alocada para o novo no
 	pont->pai = (struct arvore *)malloc(sizeof(struct arvore)); // memoria eh alocada para o pai tambem
 
@@ -84,10 +86,10 @@ void insert(struct arvore *no, char *filho, char *mae, char *pai) //funcao para 
 int main()
 {
 	struct arvore *raiz = NULL;
-	int n, i=2;
+	int n, i=2, escolha;
 	char filho[40], pai[40], mae[40];
 	printf("Ola, este programa ira montar uma arvore genealogica.\n");
-	printf("Para inserir as pessoas, digite seus nomes, de 3 em 3, separados por espaço, na seguinte ordem: 'filho mae pai'");
+	printf("Para inserir as pessoas, digite seus nomes, de 3 em 3, separados por espaco, na seguinte ordem: 'filho mae pai'");
 	printf("\nQuantas dessas tuplas (grupos de 3 nomes) voce quer entrar?");
 	scanf("%d", &n);
 	printf("Digite a tupla 1 (a arvore toda sera feita a partir deste filho):\n");
@@ -110,4 +112,8 @@ int main()
 		insert(raiz, filho, mae, pai);
 		i++;
 	}
+	printf("O que voce deseja fazer? Digite o número correspondente!");
+	printf("1 - Imprimir membros da arvore por geração\n2 - Imprimir os antepassados de um indivíduo\n");
+	printf("3 - Impressao da arvore em 'labelled bracketing'\n4 - Calcular o grau de parentesco entre 2 membros\n5 - Inserir mais individuos\n6 - Sair");
+	scanf("%d", &escolha);
 }
