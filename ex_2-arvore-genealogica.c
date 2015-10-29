@@ -37,9 +37,12 @@ struct arvore *select(struct arvore *no, char *filho)
 void antepassados(struct arvore *pessoa, char *filho)//, int k)
 {
 	//struct arvore *aux = pessoa; 
-	if(pessoa!=NULL && strcmp(pessoa->nome, filho) != 0)
+	if(pessoa!=NULL) 
 	{
-		printf("\n%s", pessoa->nome);
+		if (strcmp(pessoa->nome, filho) != 0)
+		{
+			printf("\n%s", pessoa->nome);
+		}
 		antepassados(pessoa->mae, filho);
 		antepassados(pessoa->pai, filho);
 		//if(pessoa->grau != k)
@@ -114,7 +117,7 @@ int main()
 	}
 	while (escolha != 6)
 	{
-	printf("\nO que voce deseja fazer? Digite o numero correspondente!");
+	printf("\nO que voce deseja fazer? Digite o numero correspondente!\n");
 	printf("1 - Imprimir membros da arvore por geração\n2 - Imprimir os antepassados de um individuo\n");
 	printf("3 - Impressao da arvore em 'labelled bracketing'\n4 - Calcular o grau de parentesco entre 2 membros\n5 - Inserir mais individuos\n6 - Sair\n");
 	scanf("%d", &escolha);
@@ -131,7 +134,9 @@ int main()
 			case 2:
 				printf("\nVoce quer os antepassados de qual individuo?\n ");
 				scanf("%s", ind);
+				printf("Os antepassados de %s sao:\n", ind);
 				antepassados(select(raiz, ind), ind);
+				printf("\n");
 				break;
 			case 3:
 				printf("\nImpresao em bracketing:\n");
