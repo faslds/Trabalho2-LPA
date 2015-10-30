@@ -118,7 +118,7 @@ int main()
 	while (escolha != 6)
 	{
 	printf("\nO que voce deseja fazer? Digite o numero correspondente!\n");
-	printf("1 - Imprimir membros da arvore por geração\n2 - Imprimir os antepassados de um individuo\n");
+	printf("1 - Imprimir membros da arvore por geracao\n2 - Imprimir os antepassados de um individuo\n");
 	printf("3 - Impressao da arvore em 'labelled bracketing'\n4 - Calcular o grau de parentesco entre 2 membros\n5 - Inserir mais individuos\n6 - Sair\n");
 	scanf("%d", &escolha);
 	if (escolha > 6) //caso seja escolhida uma opcao fora do menu, uma mensagem de erro eh impressa
