@@ -10,6 +10,16 @@ struct arvore
 	struct arvoer *dir;
 };
 
+posordem(struct arvore *no)
+{
+	if(no!=NULL)
+	{
+		posordem(no->esq);
+		posordem(no->dir);
+		printf("%s", no->entrada);
+	}
+}
+
 void insertsign(struct arvore *no, char *k)
 {
 	struct arvore *aux = no;
@@ -24,7 +34,7 @@ void insertsign(struct arvore *no, char *k)
 	aux->esq = novo;
 }
 
-void insertnum(struct arvore *no, char *k, int n) //passar os numeros ao contrario e ir so colocando a direita
+void insertnum(struct arvore *no, char *k, int n) 
 {
 	struct arvore *aux = no;
 	struct arvore *novo = (struct arvore *)malloc(sizeof(struct arvore));
@@ -93,10 +103,28 @@ void create(struct arvore *no, int k)
 
 int main()
 {
-	char teste[1];
-	printf("digite:");
-	scanf("%s", teste);
-	printf("o que voce digitou: %s", teste);
-	printf("Digite sua operacao, separando-a por espacos:\n");
-	while (n <= k)
+	int i = 1, j, k;
+	char entrada[1], equacao[30];
+	printf("Ola! Este programa ira converter uma entrada em notacao polonesa para a notacao polonesa reversa (RPN) e infixa.\n");
+	printf("Digite sua equacao em notacao polonesa (separe os simbolos e numeros todos por um 'espaco'):");
+	scanf("%s", entrada);
+	//strcpy(equacao, entrada);
+	equacao[0] = entrada[0];
+	while(equacao[i] == 42 || equacao[i] == 43 || equacao[i] == 45 || equacao[i] == 47)
+	{
+		scanf("%s", entrada);
+		//strcpy(equacao, entrada);
+		equacao[i] = entrada[0];
+		i++;	
+	}
+	k = i + 1;
+	for (j = 0; j < k; j++)
+	{
+		scanf("%s", entrada);
+		equacao[k+j] = entrada[0];
+	}
+	
+	printf("\na sua equecao eh %s\n", equacao);
+	printf("\nPolonesa reversa:\n");
+	//posordem
 }
