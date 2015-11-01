@@ -31,7 +31,7 @@ struct arvore *select(struct arvore *no, char *filho)
 			end = (select(no->pai, filho));
 		}
 	}
-	return (end);
+	return (end);	
 }
 
 void antepassados(struct arvore *pessoa, char *filho)//, int k)
@@ -86,6 +86,26 @@ void insert(struct arvore *no, char *filho, char *mae, char *pai) //funcao para 
 	pont->pai->grau = pont->grau+1;
 }
 
+void parentesco(struct arvore *raiz, char *no1, char *no2)
+{
+	struct arvore *a = select(raiz, no1);
+	struct arvore *b = select(a, no2);
+	int grau;
+	if(a == -2)
+	{
+		printf("\n%s e %s nao possuem garu de parentesco (grau = 0)\n", no1, no2);
+	}
+	else if (b == -2)
+	{
+		printf("\n%s e %s nao possuem garu de parentesco (grau = 0)\n", no1, no2);
+	}
+	else
+	{
+		grau = b->grau - a->grau;
+		printf("\nO grau de parentesco entre %s e %s eh %d\n", no1, no2, grau);
+	}
+}
+
 int main()
 {
 	struct arvore *raiz = NULL;
@@ -119,7 +139,7 @@ int main()
 	{
 	printf("\nO que voce deseja fazer? Digite o numero correspondente!\n");
 	printf("1 - Imprimir membros da arvore por geracao\n2 - Imprimir os antepassados de um individuo\n");
-	printf("3 - Impressao da arvore em 'labelled bracketing'\n4 - Calcular o grau de parentesco entre 2 membros\n5 - Inserir mais individuos\n6 - Sair\n");
+	printf("3 - Impressao da arvore em 'labelled bracketing'\n4 - Calcular o grau de parentesco entre 2 membros\n5 - Inserir mais individuos\n6 - Sair\n\n");
 	scanf("%d", &escolha);
 	if (escolha > 6) //caso seja escolhida uma opcao fora do menu, uma mensagem de erro eh impressa
 		{
@@ -143,6 +163,10 @@ int main()
 				bracketing(raiz);
 				break;
 			case 4:
+				printf("\nVoce quer o grau de parentesco entre quais pessoas?\nOBS:Digite o nome do mais novo e depois o do mais velho, separados por 'espaco'\n");
+				scanf("%s", ind);
+				scanf("%s", filho);
+				parentesco(raiz, ind, filho);
 				break;
 			case 5:
 				printf("\nDigite a tupla que voce deseja inserir: \n");
