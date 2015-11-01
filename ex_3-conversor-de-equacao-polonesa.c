@@ -10,6 +10,16 @@ struct arvore
 	struct arvoer *dir;
 };
 
+void preordem(struct arvore*no)
+{
+	if(no!=NULL)
+	{
+		printf("%s", no->entrada); //aqui voce faz o que quiser quando tiver no no. imprimir chave, ou qualquer outra coisa
+		preordem(no->esq);
+		preordem(no->dir);
+	}
+}
+
 posordem(struct arvore *lista)
 {
 	if(lista != NULL)
@@ -34,8 +44,9 @@ void insertsign(struct arvore *no, char *k)
 	aux->esq = novo;
 }
 
-void insertnum(struct arvore *no, char *k, int n) 
+void insertnum(struct arvore *no, char *k, int n, int i) 
 {
+	int count = 1;
 	struct arvore *aux = no;
 	struct arvore *a = NULL;
 	struct arvore *novo = (struct arvore *)malloc(sizeof(struct arvore));
@@ -55,68 +66,67 @@ void insertnum(struct arvore *no, char *k, int n)
 	}
 	else if (n == 2)
 	{
-			while (aux->esq != NULL)
+			while (count < i)
 		{
 			aux = aux->esq;
+			count++;
 		}
 		aux->dir = novo;
 	}
 	else if (n > 2)
 	{
-		while (aux->dir == NULL)
+		while (no->dir == NULL)
 		{
 			//a = aux->esq;
 			if (aux->esq->esq != NULL && aux->esq->dir != NULL && aux->dir == NULL)
 			{
 				aux->dir = novo;
-				printf("ultimo numero inserido!");
+				//printf("ultimo numero inserido!");
 			}
 			else 
 			aux = aux->esq;
-			printf("\npassou no else\n");
+			//printf("\npassou no else\n");
 		}
 	}
-	printf("\nn eh %d\n", n);
+	//printf("\nn eh %d\n", n);
 }
 
 int main()
 {
 	struct arvore *raiz = NULL;
 	int i = 1, j = 1, k;
-	char a[1];//, equacao[30];
+	char a[1], b[1];
 	printf("Ola! Este programa ira converter uma entrada em notacao polonesa para a notacao polonesa reversa (RPN) e infixa.\n");
 	printf("Digite sua equacao em notacao polonesa\n(separe os simbolos e numeros todos por um 'espaco'):");
-	scanf("%s", a);
-	//strcpy(equacao, entrada);
+	scanf("%s", b);
 	raiz = (struct arvore *)malloc(sizeof(struct arvore));
 	raiz->esq = NULL;
 	raiz->dir = NULL;
-	strcpy(raiz->entrada, a);
+	strcpy(raiz->entrada, b);
+	printf("\n\nraiz: %s\n\n", raiz->entrada);
 	scanf("%s", a);
+	printf("\n\nraiz: %s\n\n", raiz->entrada);
 	while(a[0] == 42 || a[0] == 43 || a[0] == 45 || a[0] == 47)
 	{
 		insertsign(raiz, a);
 		scanf("%s", a);
-		//strcpy(equacao, entrada);
 		i++;	
 	} 
-	//printf("\n\nfoi\n\n");
-	k = i + 2;
+	printf("\n\nraiz: %s\n\n", raiz->entrada);
+/*	printf("\n\na: %s\n\n", a);
+	strcpy(b, a);
+	printf("\n\nb: %s\n\n", b); */
+	//k = i + 2;
+	
 	//printf("\n\nk: %d \n", k);
-	insertnum(raiz, a, j);
-	//printf("\n\nfoi2\n\n");
+	insertnum(raiz, a, j, i);
 	for (j = 2; j < i + 2; j++)
 	{
-	//	printf("\n\nk: %d \n", k);
 		scanf("%s", a);
-	printf("\n\n2i: %d \n", i);
-	//	printf("\naqui%d\n", j);
-		insertnum(raiz, a, j);
-	//	printf("\n\n3k: %d \n", k);
-	//	printf("passou");
-	//	printf("j: %d, k: %d", j, k);
+		//printf("\n\n2i: %d \n", i);
+		insertnum(raiz, a, j, i);
 	}
-	printf("\naqui\n");
+	//printf("\naqui\n");
 	printf("\nPolonesa reversa:\n");
 	posordem(raiz);
 }

@@ -19,9 +19,7 @@ struct arvore *select(struct arvore *no, char *filho)
 		if (strcmp(filho, no->nome) == 0)
 		{
 			end = no;
-		//	printf("\nachou %s", no->nome);
 		}
-		//printf("\n%s", no->nome);
 		if (end == -2)
 		{
 			end = select(no->mae, filho);
@@ -34,9 +32,8 @@ struct arvore *select(struct arvore *no, char *filho)
 	return (end);	
 }
 
-void antepassados(struct arvore *pessoa, char *filho)//, int k)
+void antepassados(struct arvore *pessoa, char *filho)
 {
-	//struct arvore *aux = pessoa; 
 	if(pessoa!=NULL) 
 	{
 		if (strcmp(pessoa->nome, filho) != 0)
@@ -106,10 +103,23 @@ void parentesco(struct arvore *raiz, char *no1, char *no2)
 	}
 }
 
+void geracao(struct arvore *no, int k)
+{
+	if(no!=NULL)
+	{
+		geracao(no->mae, k);
+		if(no->grau == k)
+		{
+			printf(" %s ", no->nome);
+		}
+		geracao(no->pai, k);
+	}
+}
+
 int main()
 {
 	struct arvore *raiz = NULL;
-	int n, i=2, escolha;
+	int n, i=2, j=0, escolha;
 	char filho[40], pai[40], mae[40], ind[40];
 	printf("Ola, este programa ira montar uma arvore genealogica.\n");
 	printf("Para inserir as pessoas, digite seus nomes, de 3 em 3, separados por espaco, na seguinte ordem: 'filho mae pai'");
@@ -150,6 +160,13 @@ int main()
 		switch(escolha)
 		{
 			case 1:
+				while (j <= n)
+				{
+					printf("\nGeracao %d:", j);
+					geracao(raiz, j);
+					printf("\n");
+					j++;
+				}
 				break;
 			case 2:
 				printf("\nVoce quer os antepassados de qual individuo?\n ");
@@ -161,6 +178,7 @@ int main()
 			case 3:
 				printf("\nImpresao em bracketing:\n");
 				bracketing(raiz);
+				printf("\n");
 				break;
 			case 4:
 				printf("\nVoce quer o grau de parentesco entre quais pessoas?\nOBS:Digite o nome do mais novo e depois o do mais velho, separados por 'espaco'\n");
@@ -174,6 +192,8 @@ int main()
 				scanf("%s", mae);
 				scanf("%s", pai);
 				insert(raiz, filho, mae, pai);
+				n++;
+				break;
 		}
 	}
 	
