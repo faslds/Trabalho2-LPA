@@ -160,6 +160,7 @@ int main()
 		switch(escolha)
 		{
 			case 1:
+				j = 0;
 				while (j <= n)
 				{
 					printf("\nGeracao %d:", j);

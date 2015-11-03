@@ -11,15 +11,16 @@ struct arvore
 };
 
 void emordem(struct arvore*no)
-{
+{	
 	if(no!=NULL)
 	{
-		if (no->entrada <= 48 && no->entrada >=57)
-		printf("(");
 		emordem(no->esq);
+		if (no->entrada[0] >= 48 && no->entrada[0] <=57)
+		printf("(");		
 		printf("%s", no->entrada); //aqui voce faz o que quiser quando tiver no no. imprimir chave, ou qualquer outra coisa
-		emordem(no->dir);
+		if (no->entrada[0] >= 48 && no->entrada[0] <=57)
 		printf(")");
+		emordem(no->dir);
 	}
 }
 
@@ -29,7 +30,7 @@ posordem(struct arvore *lista)
 	{
 		posordem(lista->esq);
 		posordem(lista->dir);
-		printf(" %s", lista->entrada);
+		printf("%s ", lista->entrada);
 	}
 }
 
@@ -124,5 +125,7 @@ int main()
 	printf("\nPolonesa reversa:\n");
 	posordem(raiz);
 	printf("\nem ordem:\n");	
+	printf("(");
 	emordem(raiz);
+	printf(")");
 }
