@@ -122,9 +122,14 @@ int main()
 	int n, i=2, j=0, escolha;
 	char filho[40], pai[40], mae[40], ind[40];
 	printf("Ola, este programa ira montar uma arvore genealogica.\n");
-	printf("Para inserir as pessoas, digite seus nomes, de 3 em 3, separados por espaco, na seguinte ordem: 'filho mae pai'");
+	printf("Para inserir as pessoas, digite seus nomes, de 3 em 3, separados por espaco, na seguinte ordem: 'filho mae pai' e depois teclar 'Enter'");
 	printf("\nQuantas dessas tuplas (grupos de 3 nomes) voce quer entrar?");
 	scanf("%d", &n);
+	while (n <= 0)
+	{
+		printf("Favor digitar um numero maior do que 0");
+		scanf("%d", &n);
+	}
 	printf("Digite a tupla 1 (a arvore toda sera feita a partir deste filho):\n");
 	scanf("%s", filho);
 	scanf("%s", mae);
