@@ -112,6 +112,7 @@ void parentesco(struct arvore *raiz, char *no1, char *no2)
 		printf("\nO grau de parentesco entre %s e %s eh %d\n", no1, no2, grau);
 	}
 }
+
 /* Essa funcao utiliza o grau de cada pessoa e percorre a arvore. Como todas as pessoas
 de uma mesma geracao possuem o mesmo grau, basta checar se o grau dessa pessoa eh igual ao 
 da geracao em questao. Se for, essa pessoa pertence a essa geracao. Essa funcao foi feita
@@ -215,6 +216,5 @@ int main()
 				break;
 		}
 	}
-	
 	}
 }
