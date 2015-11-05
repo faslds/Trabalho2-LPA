@@ -1,5 +1,5 @@
 ﻿# Trabalho2-LPA
-	Este repositório contém os 3 exercícios do segundo trabalho da disciplina de Linguagens de Programação e Aplicaçõe, qua são 
+	Este repositório contém os 3 exercícios do segundo trabalho da disciplina  SSC0300 - Linguagens de Programação e Aplicaçõe, qua são 
 programas escritos na linguagem de programação C.
 Todos os exercícios foram desenvolvidos no Windows 7 64 bits, no programa Dev C++. O compilador utilizado foi o default do Dev C++, 
 v5.10, nas configurações TDM-GCC 4.8.1 64-bit Release. Todas as bibliotecas usadas foram as consideradas padrão do Dev C++.
