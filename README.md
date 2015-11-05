@@ -1,6 +1,15 @@
 ﻿# Trabalho2-LPA
 	Segundo trabalho da disciplina  SSC0300 - Linguagens de Programação e Aplicações
 
+Alunos: 
+
+1 - Felipe Augusto Senger Lopes de Souza - No USP: 5513317
+
+2 - Lucas Souza de Oliveira - No USP: 9312515
+
+3 - Gustavo de Paula Lourenço - No USP: 9312842
+
+
 Todos os exercícios foram desenvolvidos no Windows 7 64 bits, no programa Dev C++. O compilador utilizado foi o default do Dev C++, 
 v5.10, nas configurações TDM-GCC 4.8.1 64-bit Release. Todas as bibliotecas usadas foram as consideradas padrão do Dev C++.
 
