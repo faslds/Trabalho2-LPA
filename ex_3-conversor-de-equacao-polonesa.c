@@ -7,7 +7,7 @@ struct arvore //cada entrada da equacao sera um no da arvore
 {
 	char entrada[1];
 	struct arvore *esq;//cada no aponta para outros dois
-	struct arvoer *dir;
+	struct arvore *dir;
 };
 
 /* A impressoo Em Ordem eh utilizada para a impressao da notacao infixa*/
