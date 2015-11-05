@@ -103,29 +103,24 @@ int main()
 	char a[1], b[1];
 	printf("Ola! Este programa ira converter uma entrada em notacao polonesa para a notacao polonesa reversa (RPN) e infixa.\n");
 	printf("Digite sua equacao em notacao polonesa\n(separe os simbolos e numeros todos por um 'espaco' e depois tecle 'Enter'):\n");
-	raiz = (struct arvore *)malloc(sizeof(struct arvore));
-	raiz->esq = NULL;
+	raiz = (struct arvore *)malloc(sizeof(struct arvore)); // cria a raiz
+	raiz->esq = NULL; //aterra a raiz
 	raiz->dir = NULL;
 	scanf("%s", a);
 	strcpy(raiz->entrada, a);
 	scanf("%s", a);
-	while(a[0] == 42 || a[0] == 43 || a[0] == 45 || a[0] == 47)
+	while(a[0] == 42 || a[0] == 43 || a[0] == 45 || a[0] == 47) //enquanto sao entrados sinais, cahama a funcao insertsign
 	{
 		insertsign(raiz, a);
 		scanf("%s", a);
 		i++;	
 	} 
-	//printf("colocou sinais");
-	insertnum(raiz, a, j, i);
+	insertnum(raiz, a, j, i); //quando sao inseridos numeros, passa a chamar a funcao insertnum
 	for (j = 2; j < i + 2; j++)
 	{
 		scanf("%s", a);
-		//printf("\n\n2i: %d \n", i);
 		insertnum(raiz, a, j, i);
-		//printf("\nsaiu da insertnum\n");
 	}
-	//printf("\ncolocou numeros\n");
-	//printf("")
 	while (escolha != 3) //repete o menu ate que seja escolhida a opcao "sair"
 	{
 		printf("\n\nO que voce deseja fazer? Digite o numero correspondente!\n");
