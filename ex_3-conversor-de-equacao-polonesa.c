@@ -3,13 +3,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct arvore
+struct arvore //cada entrada da equacao sera um no da arvore
 {
 	char entrada[1];
-	struct arvore *esq;
+	struct arvore *esq;//cada no aponta para outros dois
 	struct arvoer *dir;
 };
 
+/* A impressoo Em Ordem eh utilizada para a impressao da notacao infixa*/
 void emordem(struct arvore*no)
 {	
 	if(no!=NULL)
@@ -17,13 +18,14 @@ void emordem(struct arvore*no)
 		emordem(no->esq);
 		if (no->entrada[0] >= 48 && no->entrada[0] <=57)
 		printf("(");		
-		printf("%s", no->entrada); //aqui voce faz o que quiser quando tiver no no. imprimir chave, ou qualquer outra coisa
+		printf("%s", no->entrada); 
 		if (no->entrada[0] >= 48 && no->entrada[0] <=57)
 		printf(")");
 		emordem(no->dir);
 	}
 }
 
+/* A impressao Pos Ordem eh utilizada para a impressao da notacao RNP*/
 posordem(struct arvore *lista)
 {
 	if(lista != NULL)
@@ -34,6 +36,8 @@ posordem(struct arvore *lista)
 	}
 }
 
+/*A funcao insertsign insere apenas os operadores da equacao na arvore, 
+todos sao inseridos a esquerda*/
 void insertsign(struct arvore *no, char *k)
 {
 	struct arvore *aux = no;
@@ -48,6 +52,9 @@ void insertsign(struct arvore *no, char *k)
 	aux->esq = novo;
 }
 
+/*a funcao insertnum insere os numeros da equacao na arvore, sendo o prieiro
+deles a esquerda do uktimo sinal, o segundo a direita do ultimo sinal, e os demais
+numeros (n > 2) a direita de seus respectivos operadores */
 void insertnum(struct arvore *no, char *k, int n, int i) 
 {
 	int count = 1;
@@ -57,14 +64,11 @@ void insertnum(struct arvore *no, char *k, int n, int i)
 	novo->esq = NULL;
 	novo->dir = NULL;
 	strcpy(novo->entrada, k);
-	//printf("\n\naqui!\n\n");
 	if (n == 1)
 	{
-		
 		while (aux->esq != NULL)
 		{
 			aux = aux->esq;
-			//printf("\n\naqui2!\n\n");
 		}
 		aux->esq = novo;
 	}
@@ -81,24 +85,21 @@ void insertnum(struct arvore *no, char *k, int n, int i)
 	{
 		while (no->dir == NULL)
 		{
-			//a = aux->esq;
 			if (aux->esq->esq != NULL && aux->esq->dir != NULL && aux->dir == NULL)
 			{
 				aux->dir = novo;
-				//printf("ultimo numero inserido!");
+				break;
 			}
 			else 
 			aux = aux->esq;
-			//printf("\npassou no else\n");
 		}
 	}
-	//printf("\nn eh %d\n", n);
 }
 
 int main()
 {
 	struct arvore *raiz = NULL;
-	int i = 1, j = 1, k;
+	int i = 1, j = 1, k, escolha;
 	char a[1], b[1];
 	printf("Ola! Este programa ira converter uma entrada em notacao polonesa para a notacao polonesa reversa (RPN) e infixa.\n");
 	printf("Digite sua equacao em notacao polonesa\n(separe os simbolos e numeros todos por um 'espaco' e depois tecle 'Enter'):\n");
@@ -114,18 +115,40 @@ int main()
 		scanf("%s", a);
 		i++;	
 	} 
+	//printf("colocou sinais");
 	insertnum(raiz, a, j, i);
 	for (j = 2; j < i + 2; j++)
 	{
 		scanf("%s", a);
 		//printf("\n\n2i: %d \n", i);
 		insertnum(raiz, a, j, i);
+		//printf("\nsaiu da insertnum\n");
 	}
-	//printf("\naqui\n");
-	printf("\nPolonesa reversa:\n");
-	posordem(raiz);
-	printf("\nem ordem:\n");	
-	printf("(");
-	emordem(raiz);
-	printf(")");
+	//printf("\ncolocou numeros\n");
+	//printf("")
+	while (escolha != 3) //repete o menu ate que seja escolhida a opcao "sair"
+	{
+		printf("\n\nO que voce deseja fazer? Digite o numero correspondente!\n");
+		printf("1 - Impressao na notacao polonesa reversa (RPN)\n2 - Impressao na notacao infixa\n3 - Sair\n\n");
+		scanf("%d", &escolha);
+		if (escolha > 3 || escolha <1) //caso seja escolhida uma opcao fora do menu, uma mensagem de erro eh impressa
+		{
+			printf("Favor entrar com uma das opcoes do menu.\n");
+		}
+		else
+		{
+			switch(escolha)
+			{
+				case 1:
+					printf("\nPolonesa reversa:\n");
+					posordem(raiz);
+					break;
+				case 2:
+					printf("\nNotacao infixa:\n");	
+					printf("(");
+					emordem(raiz);
+					printf(")");
+			}
+		}
+	}
 }

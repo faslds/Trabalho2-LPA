@@ -3,7 +3,7 @@
 
 struct arvore
 {
-	int chave; //chave serve para o reconhecimento do item
+	int chave; //chave eh o numero que sera entrado
 	struct arvore *esq; //cada strcut aponta para outras duas, uma a esquerda e outra a direita
 	struct arvore *dir;
 };
@@ -27,15 +27,15 @@ void insert(struct arvore *no, int c) //funcao para inserir numeros
 		}
 		novo = (struct arvore *)malloc(sizeof(struct arvore)); // memoria eh locada para o novo no
 		novo->chave = c;
-		novo->esq = NULL;
+		novo->esq = NULL; //no esq e dir sao aterrados aqui
 		novo->dir = NULL;
 		if (pai->chave >= novo->chave) //aqui checa onde colocar o novo no para manter a ordenacao
 		{
-			pai->esq = novo;
+			pai->esq = novo; //atribui o novo no em seu lugar coreto
 		}
 		else
 		{ 
-			pai->dir = novo;
+			pai->dir = novo; //atribui o novo no em seu lugar coreto
 		}
 }
 
@@ -46,7 +46,7 @@ int removenum(struct arvore *no, int k) //funcao para remover numeros
 	struct arvore *pai = NULL;
 	struct arvore *a = NULL;
 	struct arvore *b = NULL;
-	while (aux != NULL && aux->chave != k) //aqui localiza o item a ser removida=o
+	while (aux != NULL && aux->chave != k) //aqui localiza o item a ser removido
 	{
 		pai = aux;
 		if (aux->chave >= k)
@@ -71,12 +71,12 @@ int removenum(struct arvore *no, int k) //funcao para remover numeros
 		a = a->esq; //procura todos a esquerda, pois serao menores que o item a ser removido
 	}
 	
-	if (a != NULL) //dois casos para fazera remocao, dependendo se a chegou a NULL ou nao.
+	if (a != NULL) //dois casos para fazer a remocao, dependendo se a chegou a NULL ou nao.
 	{
 		a->esq = aux->esq;
 		b = aux->dir;
 	}
-	else 
+	else
 	{
 		b = aux->esq;
 	}
@@ -207,12 +207,12 @@ int main()
 	int a, c, k, n, escolha, busca, root, i=2;
 	char r;
 	struct arvore * raiz = (struct arvore*) malloc(sizeof(struct arvore)); // a raiz eh alocada e feita na funcao main
-    raiz->esq = NULL;
+    raiz->esq = NULL; //a raiz eh aterrada aqui
     raiz->dir = NULL;
     printf("Ola, para comecar o programa, primeiro eh preciso criar sua arvore.\n");
 	printf("Quantos numeros voce quer inserir?\n");
 	scanf("%d", &n);
-	while (n<1)
+	while (n<1) //evita um numero que cause erros no programa
 	{
 		printf("Favor entrar com um numero maior do que 0\n");
 		scanf("%d", &n);
@@ -234,13 +234,13 @@ int main()
 		printf("1 - Buscar um numero\n2 - Impressao Em Ordem\n3 - Impressao Pre Ordem\n4 - Impressao Pos Ordem\n");
 		printf("5 - Impressao em Labelled Bracketing\n6 - Inserir mais numeros\n7 - Remover numeros\n8 - Sair\n\n");
 		scanf("%d", &escolha);
-		if (escolha > 8) //caso seja escolhida uma opcao fora do menu, uma mensagem de erro eh impressa
+		if (escolha > 8 || escolha < 1) //caso seja escolhida uma opcao fora do menu, uma mensagem de erro eh impressa
 		{
 			printf("Favor entrar com uma das opcoes do menu.\n");
 		}
 		else
 		{
-			switch(escolha)
+			switch(escolha) //o menu foi feito usando switch-case
 			{
 			case 1:
 				printf("\nQual numero voce quer buscar?\n");
